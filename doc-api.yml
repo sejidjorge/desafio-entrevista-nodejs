@@ -1,0 +1,434 @@
+openapi: "3.0.2"
+info:
+  title: API Title
+  version: "1.0"
+servers:
+  - url: http://localhost:3000
+  - url: http://localhost:3001
+paths:
+  /users/register:
+    post:
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Successfully registered user.
+        "400":
+          description: Bad request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createUser"
+  /users/login:
+    post:
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Successfully logged in user.
+        "400":
+          description: Bad request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/loginUser"
+  /users/list:
+    get:
+      tags:
+        - Users
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully retrieved list of users.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listAllUsers"
+        "400":
+          description: Bad request.
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: userId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully retrieved user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: Bad request.
+    put:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: userId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/editUser"
+      responses:
+        "200":
+          description: Successfully edited user.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        "400":
+          description: Bad request.
+
+    delete:
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: userId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully deleted user.
+        "400":
+          description: Bad request.
+  /cars/list:
+    get:
+      tags:
+        - Cars
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully retrieved list of cars.
+        "400":
+          description: Bad request.
+  /cars/new:
+    post:
+      tags:
+        - Cars
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createCar"
+      responses:
+        "200":
+          description: Successfully created new car.
+        "400":
+          description: Bad request.
+  /cars/{carId}:
+    get:
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: carId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully retrieved car.
+        "400":
+          description: Bad request.
+    put:
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: carId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/editCar"
+      responses:
+        "200":
+          description: Successfully edited car.
+        "400":
+          description: Bad request.
+    delete:
+      tags:
+        - Cars
+      parameters:
+        - in: path
+          name: carId
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          schema:
+            type: integer
+          required: true
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully deleted car.
+        "400":
+          description: Bad request.
+  /bids/new:
+    post:
+      tags:
+        - Bids
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createBid"
+      responses:
+        "200":
+          description: Successfully created new bid.
+        "400":
+          description: Bad request.
+  /reports:
+    get:
+      tags:
+        - Reports
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+          required: true
+          description: Bearer token.
+      responses:
+        "200":
+          description: Successfully retrieved reports.
+        "400":
+          description: Bad request.
+components:
+  schemas:
+    createUser:
+      type: object
+      required:
+        - name
+        - email
+        - password
+      properties:
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "johndoe@email.com"
+        password:
+          type: string
+          example: "password"
+        role:
+          type: string
+          example: "USER"
+          enum: ["USER", "ADMIN"]
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "johndoe@email.com"
+        role:
+          type: string
+          example: "USER"
+          enum: ["USER", "ADMIN"]
+        createdAt:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+    editUser:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "John Doe Edd"
+        role:
+          type: string
+          example: "ADMIN"
+          enum: ["USER", "ADMIN"]
+    listAllUsers:
+      type: array
+      items:
+        $ref: "#/components/schemas/user"
+    loginUser:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: "johndoe@email.com"
+        password:
+          type: string
+          example: "password"
+    createCar:
+      type: object
+      required:
+        - brand
+        - model
+        - year
+        - startBid
+        - auctionStart
+        - auctionEnd
+      properties:
+        brand:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Camry"
+        year:
+          type: integer
+          example: 2022
+        startBid:
+          type: number
+          example: 20000
+        auctionStart:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+        auctionEnd:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+        description:
+          type: string
+          example: "This is a car."
+        image:
+          type: string
+          example: "https://example.com/image.jpg"
+    editCar:
+      type: object
+      properties:
+        brand:
+          type: string
+          example: "Toyota"
+        model:
+          type: string
+          example: "Camry"
+        year:
+          type: integer
+          example: 2022
+        startBid:
+          type: number
+          example: 20000
+        auctionStart:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+        auctionEnd:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
+        description:
+          type: string
+          example: "This is a car."
+        image:
+          type: string
+          example: "https://example.com/image.jpg"
+    createBid:
+      type: object
+      required:
+        - amount
+        - carId
+      properties:
+        currentBid:
+          type: number
+          example: 30000
+        carId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
