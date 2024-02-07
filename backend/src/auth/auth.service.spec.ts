@@ -46,9 +46,9 @@ describe("AuthService", () => {
     const res = {} as unknown as Response;
     const next = jest.fn();
 
-    await service.validateSession(req, res, next);
+    const validate = await service.validateSession(req, res, next);
 
     expect(jwtService.verify).toHaveBeenCalledWith(token);
-    expect(next).toHaveBeenCalled();
+    expect(validate).toHaveBeenCalled();
   });
 });

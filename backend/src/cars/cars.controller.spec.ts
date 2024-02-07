@@ -97,7 +97,7 @@ describe("CarsController", () => {
       .spyOn(carsService, "getCars")
       .mockImplementation(async () => expectedListResponse);
 
-    const listCars = carsController.getCars();
+    const listCars = await carsController.getCars();
 
     expect(listCars).toEqual(expectedListResponse);
   });
@@ -114,7 +114,7 @@ describe("CarsController", () => {
       .spyOn(carsService, "getCar")
       .mockImplementation(async () => expectedSingleResponse);
 
-    const getCar = carsController.getCar(request);
+    const getCar = await carsController.getCar(request);
 
     expect(getCar).toEqual(expectedSingleResponse);
   });
@@ -132,7 +132,7 @@ describe("CarsController", () => {
       .spyOn(carsService, "updateCar")
       .mockImplementation(async () => expectedSingleResponse);
 
-    const updateCar = carsController.updateCar(request);
+    const updateCar = await carsController.updateCar(request);
 
     expect(updateCar).toEqual(expectedSingleResponse);
   });
@@ -157,8 +157,8 @@ describe("CarsController", () => {
       .spyOn(carsService, "deleteCar")
       .mockImplementation(async () => expectResponse);
 
-    const deleteCar = carsController.deleteCar(request);
+    const deleteCar = await carsController.deleteCar(request);
 
-    expect(deleteCar).toEqual(expectedSingleResponse);
+    expect(deleteCar).toEqual(expectResponse);
   });
 });
