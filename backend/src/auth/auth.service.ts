@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { $Enums } from "@prisma/client";
-import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
 export class User {
   id: string;

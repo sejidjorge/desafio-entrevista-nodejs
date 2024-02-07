@@ -24,21 +24,20 @@ export class UsersController {
   @Get(":userId")
   async getUser(@Req() request: Request) {
     const { userId } = request.params;
-
-    return await this.usersService.getUser(userId, request.header);
+    return await this.usersService.getUser(userId, request.headers);
   }
 
   @Put(":userId")
   async updateUser(@Req() request: Request) {
     const { userId } = request.params;
-    const { body, header } = request;
-    return await this.usersService.updateUser(userId, body, header);
+    const { body, headers } = request;
+    return await this.usersService.updateUser(userId, body, headers);
   }
 
   @Delete(":userId")
   async deleteUser(@Req() request: Request) {
     const { userId } = request.params;
-    return await this.usersService.deleteUser(userId, request.header);
+    return await this.usersService.deleteUser(userId, request.headers);
   }
 
 }
