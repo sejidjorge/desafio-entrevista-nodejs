@@ -41,7 +41,7 @@ describe("AuthService", () => {
 
   it("should allow valid token", async () => {
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHQiOjE3MDczMzgzNjB9.f3vxA6yQjrThL_JxNp9HdMAZaVkqAvvUfvUEKqnj_1o";
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzMxOGI4OTkyZDc1MmFlZjQyZDE3MiIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVU0VSIiwiZXhwIjoxNzA3MzYxNDc0LCJpYXQiOjE3MDczNTQyNzR9.GbwwlmVgniIuv3vsMWQLhPRX0tYw1wl8m1xCGTdF-qE";
     const req = { headers: { authorization: token } } as unknown as Request;
     const res = {} as unknown as Response;
     const next = jest.fn();
