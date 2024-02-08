@@ -133,8 +133,18 @@ export class UsersService {
       };
       return { user: formatedUser, token };
     } catch (error) {
-      console.log(error);
-
+      if (
+        error.message === "User not found" ||
+        error.message === "Invalid password"
+      ) {
+        throw new HttpException(
+          {
+            message: error.message,
+            statusCode: HttpStatus.BAD_REQUEST,
+          },
+          HttpStatus.BAD_REQUEST
+        );
+      }
       throw new HttpException(
         {
           message: "Error logging in",

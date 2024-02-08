@@ -76,10 +76,10 @@ export class CarsService {
       });
       return newCar;
     } catch (error) {
-      if (error.includes("is required")) {
+      if (error.message) {
         throw new HttpException(
           {
-            message: error,
+            message: error.message,
             statusCode: HttpStatus.BAD_REQUEST,
           },
           HttpStatus.BAD_REQUEST
@@ -95,9 +95,46 @@ export class CarsService {
     }
   }
 
-  async getCars(): Promise<ReturnCar[]> {
+  async getCars(headers): Promise<ReturnCar[]> {
+    // biome-ignore lint/complexity/useLiteralKeys: <explanation>
+    const token = headers["authorization"].slice(7);
+    const tokenDecoded = await this.jwtService.verify(token);
     try {
+      if (tokenDecoded.role !== "ADMIN") {
+        const cars = await prisma.cars.findMany({
+          where: {
+            status: "OPEN",
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          select: {
+            id: true,
+            brand: true,
+            model: true,
+            year: true,
+            auctionStart: true,
+            auctionEnd: true,
+            startBid: true,
+            createdAt: true,
+            updatedAt: true,
+            image: true,
+            description: true,
+            Bids: {
+              select: {
+                id: true,
+                bidValue: true,
+                createdAt: true,
+              },
+            },
+          },
+        });
+        return cars;
+      }
       const cars = await prisma.cars.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
         select: {
           id: true,
           brand: true,
@@ -110,6 +147,13 @@ export class CarsService {
           updatedAt: true,
           image: true,
           description: true,
+          Bids: {
+            select: {
+              id: true,
+              bidValue: true,
+              createdAt: true,
+            },
+          },
         },
       });
       return cars;
@@ -142,6 +186,13 @@ export class CarsService {
           updatedAt: true,
           image: true,
           description: true,
+          Bids: {
+            select: {
+              id: true,
+              bidValue: true,
+              createdAt: true,
+            },
+          },
         },
       });
       return car;
@@ -208,9 +259,11 @@ export class CarsService {
       });
       return updatedCar;
     } catch (error) {
+      console.log(error);
+
       throw new HttpException(
         {
-          message: "Error getting cars",
+          message: "Error update car",
           statusCode: HttpStatus.BAD_REQUEST,
         },
         HttpStatus.BAD_REQUEST

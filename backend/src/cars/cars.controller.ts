@@ -12,8 +12,8 @@ export class CarsController {
   }
 
   @Get("list")
-  async getCars() {
-    return await this.carsService.getCars();
+  async getCars(@Req() resquest: Request) {
+    return await this.carsService.getCars(resquest.headers);
   }
 
   @Get(":carId")

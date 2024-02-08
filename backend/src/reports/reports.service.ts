@@ -1,9 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { prisma } from "../prisma";
+export class ReportData {
+  total_users: number;
+  total_cars: number;
+  total_bids: number;
+  total_purchases: number;
+}
 
 @Injectable()
 export class ReportsService {
-  async getReports() {
+  async getReports(): Promise<ReportData> {
     try {
       const users = await prisma.users.count();
       const cars = await prisma.cars.count();
