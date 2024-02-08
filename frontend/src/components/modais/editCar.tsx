@@ -67,6 +67,7 @@ export default function EditCar(props: NewCarModalProps) {
       "startBid",
     ];
     for (const field of required) {
+      // @ts-ignore
       if (!car[field]) {
         setError(`${field} é obrigatorio`);
         return false;
@@ -218,6 +219,7 @@ export default function EditCar(props: NewCarModalProps) {
               id="auctionStart"
               label="Início do leilão"
               value={car.auctionStart}
+              // @ts-ignore
               onChange={(e) => setCar({ ...car, auctionStart: e.target.value })}
               variant="outlined"
               type="date"
@@ -230,6 +232,7 @@ export default function EditCar(props: NewCarModalProps) {
               id="auctionEnd"
               label="Fim do leilão"
               value={car.auctionEnd}
+              // @ts-ignore
               onChange={(e) => setCar({ ...car, auctionEnd: e.target.value })}
               variant="outlined"
               type="date"

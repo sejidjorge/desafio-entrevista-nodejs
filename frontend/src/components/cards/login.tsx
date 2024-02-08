@@ -20,14 +20,14 @@ interface loginData {
 
 interface LoginCardTypes {
   login: loginData;
-  setLogin: (login: loginData) => Dispatch<SetStateAction<loginData>>;
-  setStep: (step: number) => Dispatch<SetStateAction<number>>;
+  setLogin: Dispatch<SetStateAction<loginData>>;
+  setStep: Dispatch<SetStateAction<number>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
   handleMouseDownPassword: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleSubmitLogin(): Promise<void>;
   error: string;
-  setError: (error: string) => Dispatch<SetStateAction<string>>;
+  setError: Dispatch<SetStateAction<string>>;
 }
 
 export default function LoginCard({
@@ -44,6 +44,7 @@ export default function LoginCard({
   function validate() {
     const required = ["email", "password"];
     for (const field of required) {
+      //@ts-ignore
       if (!login[field]) {
         setError(`${field} é obrigatorio`);
       } else {

@@ -25,16 +25,14 @@ interface registerData {
 
 interface RegisterCardTypes {
   register: registerData;
-  setRegister: (
-    register: registerData
-  ) => Dispatch<SetStateAction<registerData>>;
-  setStep: (step: number) => Dispatch<SetStateAction<number>>;
+  setRegister: Dispatch<SetStateAction<registerData>>;
+  setStep: Dispatch<SetStateAction<number>>;
   showPassword: boolean;
   handleClickShowPassword: () => void;
   handleMouseDownPassword: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleSubmitRegister(): Promise<void>;
   error: string;
-  setError: (error: string) => Dispatch<SetStateAction<string>>;
+  setError: Dispatch<SetStateAction<string>>;
 
 }
 
@@ -53,6 +51,7 @@ export default function RegisterCard({
   function validate() {
     const required = ["name", "email", "password", "confirmPassword"];
     for (const field of required) {
+      // @ts-ignore
       if (!register[field]) {
         setError(`${field} é obrigatorio`);
       } else if (register.password !== register.confirmPassword) {

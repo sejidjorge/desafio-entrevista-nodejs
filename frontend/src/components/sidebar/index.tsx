@@ -1,6 +1,7 @@
 import { useControlPageTitle } from "@/contexts/PageContext";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { logout } from "@/store/reducers/authReducer";
+import { AuthReducerStateTypes } from '@/types';
 import {
   Dashboard,
   DirectionsCar,
@@ -44,7 +45,7 @@ interface MenuExpandTypes {
 }
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
-  const { user } = useAppSelector((state: { authUser: any }) => state.authUser);
+  const { user } = useAppSelector((state: { authUser: AuthReducerStateTypes }) => state.authUser);
   const { pageTitle } = useControlPageTitle();
   const [open, setOpen] = useState(false);
   const [routes, setRoutes] = useState<MenuExpandTypes[]>([]);
