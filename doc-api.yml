@@ -40,13 +40,8 @@ paths:
     get:
       tags:
         - Users
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved list of users.
@@ -60,6 +55,8 @@ paths:
     get:
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -67,12 +64,6 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       responses:
         "200":
           description: Successfully retrieved user.
@@ -85,6 +76,8 @@ paths:
     put:
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -92,12 +85,6 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       requestBody:
         required: true
         content:
@@ -117,6 +104,8 @@ paths:
     delete:
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: userId
@@ -124,12 +113,6 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       responses:
         "200":
           description: Successfully deleted user.
@@ -139,13 +122,8 @@ paths:
     get:
       tags:
         - Cars
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved list of cars.
@@ -155,13 +133,8 @@ paths:
     post:
       tags:
         - Cars
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -177,6 +150,8 @@ paths:
     get:
       tags:
         - Cars
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: carId
@@ -184,12 +159,6 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       responses:
         "200":
           description: Successfully retrieved car.
@@ -198,6 +167,8 @@ paths:
     put:
       tags:
         - Cars
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: carId
@@ -205,12 +176,6 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       requestBody:
         required: true
         content:
@@ -225,6 +190,8 @@ paths:
     delete:
       tags:
         - Cars
+      security:
+        - bearerAuth: []
       parameters:
         - in: path
           name: carId
@@ -232,28 +199,17 @@ paths:
           schema:
             type: integer
           required: true
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
       responses:
         "200":
           description: Successfully deleted car.
         "400":
           description: Bad request.
-  /bids/new:
+  /bids:
     post:
       tags:
         - Bids
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -265,17 +221,33 @@ paths:
           description: Successfully created new bid.
         "400":
           description: Bad request.
+    get:
+      tags:
+        - Bids
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved list of bids by user.
+        "400":
+          description: Bad request.
+  /bids/all:
+    get:
+      tags:
+        - Bids
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved list of bids all users.
+        "400":
+          description: Bad request.
   /reports:
     get:
       tags:
         - Reports
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-          required: true
-          description: Bearer token.
+      security:
+        - bearerAuth: []
       responses:
         "200":
           description: Successfully retrieved reports.
@@ -422,13 +394,19 @@ components:
     createBid:
       type: object
       required:
-        - amount
+        - bidValue
         - carId
       properties:
-        currentBid:
+        bidValue:
           type: number
           example: 30000
         carId:
           type: string
           format: uuid
           example: "123e4567-e89b-12d3-a456-426614174000"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      x-description: "Bearer token authentication"

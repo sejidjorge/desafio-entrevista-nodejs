@@ -32,7 +32,8 @@ export class AuthService {
     next: NextFunction
   ) {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = request.headers["authorization"];
+    const token = request.headers["authorization"].slice(7);
+
     if (token) {
       try {
         const decoded = await this.jwtService.verify(token);

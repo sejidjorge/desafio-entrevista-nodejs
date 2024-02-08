@@ -30,7 +30,7 @@ export class CarsService {
 
   async createCar(car: NewCar, headers): Promise<ReturnCar> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = headers["authorization"];
+    const token = headers["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     if (tokenDecoded.role !== "ADMIN") {
       throw new HttpException(
@@ -158,7 +158,7 @@ export class CarsService {
 
   async updateCar(id: string, car: NewCar, headers): Promise<ReturnCar> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = headers["authorization"];
+    const token = headers["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     if (tokenDecoded.role !== "ADMIN") {
       throw new HttpException(
@@ -220,7 +220,7 @@ export class CarsService {
 
   async deleteCar(id: string, headers): Promise<HttpException> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = headers["authorization"];
+    const token = headers["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     if (tokenDecoded.role !== "ADMIN") {
       throw new HttpException(

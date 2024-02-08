@@ -167,7 +167,7 @@ export class UsersService {
 
   async getUser(id: string, header): Promise<User> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = header["authorization"];
+    const token = header["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     if (tokenDecoded.id !== id && tokenDecoded.role !== "ADMIN") {
       throw new HttpException(
@@ -205,7 +205,7 @@ export class UsersService {
 
   async updateUser(id: string, body, header): Promise<User> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = header["authorization"];
+    const token = header["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     const updatedBody = { ...body };
 
@@ -247,7 +247,7 @@ export class UsersService {
 
   async deleteUser(id: string, headers): Promise<HttpException> {
     // biome-ignore lint/complexity/useLiteralKeys: <explanation>
-    const token = headers["authorization"];
+    const token = headers["authorization"].slice(7);
     const tokenDecoded = await this.jwtService.verify(token);
     if (tokenDecoded.id !== id && tokenDecoded.role !== "ADMIN") {
       throw new HttpException(
