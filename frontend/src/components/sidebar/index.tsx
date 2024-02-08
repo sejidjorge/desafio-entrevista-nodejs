@@ -68,7 +68,6 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
     };
 
   function renderRoutes() {
-    if (user.role === "ADMIN") {
       setRoutes([
         {
           path: "/dashboard",
@@ -81,20 +80,6 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
           icon: <DirectionsCar />,
         },
       ]);
-    } else {
-      setRoutes([
-        {
-          path: "/dashboard",
-          label: "Dashboard",
-          icon: <Dashboard />,
-        },
-        {
-          path: "/cars",
-          label: "Carros",
-          icon: <DirectionsCar />,
-        },
-      ]);
-    }
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
