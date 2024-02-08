@@ -2,6 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { logout } from "@/store/reducers/authReducer";
+import { AuthReducerStateTypes } from '@/types';
 import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -13,7 +14,7 @@ export default function Middleware({
 }) {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const { token } = useAppSelector(
-    (state: { authUser: any }) => state.authUser
+    (state: { authUser: AuthReducerStateTypes }) => state.authUser
   );
   const dispatch = useAppDispatch();
   const router = useRouter();
