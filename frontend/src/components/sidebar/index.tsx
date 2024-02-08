@@ -1,7 +1,10 @@
-import { useAppSelector } from "@/hooks/reduxHook";
+import { useControlPageTitle } from "@/contexts/PageContext";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
+import { logout } from "@/store/reducers/authReducer";
 import {
   Dashboard,
   DirectionsCar,
+  ExitToApp,
   Group,
   Inbox,
   Mail,
@@ -12,6 +15,8 @@ import {
   AppBar,
   Box,
   Button,
+  Container,
+  Divider,
   IconButton,
   List,
   ListItem,
@@ -21,8 +26,9 @@ import {
   SwipeableDrawer,
   Toolbar,
   Typography,
+  Grid,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface MenuTypes {
@@ -39,9 +45,12 @@ interface MenuExpandTypes {
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
   const { user } = useAppSelector((state: { authUser: any }) => state.authUser);
+  const { pageTitle } = useControlPageTitle();
   const [open, setOpen] = useState(false);
   const [routes, setRoutes] = useState<MenuExpandTypes[]>([]);
+  const dispath = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -66,19 +75,9 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
           icon: <Dashboard />,
         },
         {
-          path: "/users",
-          label: "Users",
-          icon: <Group />,
-        },
-        {
           path: "/cars",
-          label: "Cars",
+          label: "Carros",
           icon: <DirectionsCar />,
-        },
-        {
-          path: "/profile",
-          label: "Profile",
-          icon: <Person2 />,
         },
       ]);
     } else {
@@ -90,13 +89,8 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
         },
         {
           path: "/cars",
-          label: "Cars",
+          label: "Carros",
           icon: <DirectionsCar />,
-        },
-        {
-          path: "/profile",
-          label: "Profile",
-          icon: <Person2 />,
         },
       ]);
     }
@@ -112,20 +106,32 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div>
+    <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer(true)}
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
             >
-              <Menu />
-            </IconButton>
+              <Grid item>
+                <Typography variant="h5">{pageTitle}</Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ mr: 2 }}
+                  onClick={toggleDrawer(true)}
+                >
+                  <Menu />
+                </IconButton>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
       </Box>
@@ -150,10 +156,24 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                 </ListItemButton>
               </ListItem>
             ))}
+            <Divider />
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  dispath(logout());
+                  router.push("/login");
+                }}
+              >
+                <ListItemIcon>
+                  <ExitToApp />
+                </ListItemIcon>
+                <ListItemText primary="Sair" />
+              </ListItemButton>
+            </ListItem>
           </List>
         </Box>
       </SwipeableDrawer>
-      {children}
-    </div>
+      <Container maxWidth="xl">{children}</Container>
+    </>
   );
 }

@@ -54,9 +54,9 @@ export default function RegisterCard({
     const required = ["name", "email", "password", "confirmPassword"];
     for (const field of required) {
       if (!register[field]) {
-        setError(`${field} is required`);
+        setError(`${field} é obrigatorio`);
       } else if (register.password !== register.confirmPassword) {
-        setError("Passwords do not match");
+        setError("Senhas não correspondem");
       } else {
         setError("");
       }
@@ -74,13 +74,13 @@ export default function RegisterCard({
         Register
       </Typography>
       <Typography variant="body1" align="center">
-        Create your new account
+        Crie sua nova conta
       </Typography>
       <Grid container spacing={2} padding={4} justifyContent="center">
         <Grid item xs={12}>
           <TextField
             id="name"
-            label="Name"
+            label="Nome"
             value={register.name}
             onChange={(e) => setRegister({ ...register, name: e.target.value })}
             variant="outlined"
@@ -107,12 +107,12 @@ export default function RegisterCard({
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth size="small">
-            <InputLabel id="demo-simple-select-label">Role</InputLabel>
+            <InputLabel id="demo-simple-select-label">Nivel do usuario</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={register.role}
-              label="Role"
+              label="Nivel do usuario"
               onChange={(e) =>
                 setRegister({ ...register, role: e.target.value })
               }
@@ -128,7 +128,7 @@ export default function RegisterCard({
         <Grid item xs={12}>
           <FormControl size="small" fullWidth={true} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
-              Password
+              Senha
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -149,14 +149,14 @@ export default function RegisterCard({
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Senha"
             />
           </FormControl>
         </Grid>
         <Grid item xs={12}>
           <FormControl size="small" fullWidth={true} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
-              Confirm Password
+              Confirmar senha
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -180,7 +180,7 @@ export default function RegisterCard({
                   </IconButton>
                 </InputAdornment>
               }
-              label="Confirm password"
+              label="Confirmar senha"
             />
           </FormControl>
         </Grid>
@@ -198,12 +198,12 @@ export default function RegisterCard({
             type="button"
             onClick={handleSubmitRegister}
           >
-            Create new Account
+            Criar nova conta
           </Button>
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body1">
-            Already have an account?
+            Já possui uma conta?
             <Button variant="text" color="primary" onClick={() => setStep(0)}>
               Login
             </Button>

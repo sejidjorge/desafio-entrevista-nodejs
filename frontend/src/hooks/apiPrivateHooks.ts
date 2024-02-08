@@ -1,4 +1,4 @@
-import { NewBid, NewCar, updateUser } from "@/types";
+import { NewBid, NewCarTypes, updateUser } from "@/types";
 import { AxiosPrivateService } from "@/utils/axios";
 
 function getToken(): string | null {
@@ -33,7 +33,7 @@ export const usePrivateApi = () => ({
     );
     return response;
   },
-  newCar: async (body: NewCar) => {
+  newCar: async (body: NewCarTypes) => {
     const response = await AxiosPrivateService(getToken()).post(
       "/cars/new",
       body
@@ -41,7 +41,7 @@ export const usePrivateApi = () => ({
     return response;
   },
   getAllCars: async () => {
-    const response = await AxiosPrivateService(getToken()).get("/cars/new");
+    const response = await AxiosPrivateService(getToken()).get("/cars/list");
     return response;
   },
   getCarById: async (carId: string) => {
@@ -50,7 +50,7 @@ export const usePrivateApi = () => ({
     );
     return response;
   },
-  updateCar: async (carId: string, body: NewCar) => {
+  updateCar: async (carId: string, body: NewCarTypes) => {
     const response = await AxiosPrivateService(getToken()).put(
       `/cars/${carId}`,
       body
@@ -71,8 +71,12 @@ export const usePrivateApi = () => ({
     const response = await AxiosPrivateService(getToken()).get("/bids");
     return response;
   },
-  getAllUsersBids: async (body: NewBid) => {
+  getAllUsersBids: async () => {
     const response = await AxiosPrivateService(getToken()).get("/bids");
+    return response;
+  },
+  reports: async () => {
+    const response = await AxiosPrivateService(getToken()).get("/reports");
     return response;
   },
 });

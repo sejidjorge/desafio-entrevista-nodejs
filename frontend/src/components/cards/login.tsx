@@ -45,7 +45,7 @@ export default function LoginCard({
     const required = ["email", "password"];
     for (const field of required) {
       if (!login[field]) {
-        setError(`${field} is required`);
+        setError(`${field} é obrigatorio`);
       } else {
         setError("");
       }
@@ -63,7 +63,7 @@ export default function LoginCard({
         Login
       </Typography>
       <Typography variant="body1" align="center">
-        Login to your account
+        Faça login na sua conta
       </Typography>
       <Grid container spacing={2} padding={4} justifyContent="center">
         <Grid item xs={12}>
@@ -81,9 +81,7 @@ export default function LoginCard({
         </Grid>
         <Grid item xs={12}>
           <FormControl size="small" fullWidth={true} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
+            <InputLabel htmlFor="outlined-adornment-password">Senha</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               type={showPassword ? "text" : "password"}
@@ -101,7 +99,7 @@ export default function LoginCard({
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label="Senha"
             />
           </FormControl>
         </Grid>
@@ -123,9 +121,9 @@ export default function LoginCard({
         </Grid>
         <Grid item xs={12}>
           <Typography variant="body1">
-            New user?
+            Novo usuario?
             <Button variant="text" color="primary" onClick={() => setStep(1)}>
-              Create new Account
+              Crie uma nova conta
             </Button>
           </Typography>
         </Grid>

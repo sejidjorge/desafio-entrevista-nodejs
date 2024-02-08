@@ -30,7 +30,8 @@ export const AuthSlice = createSlice({
       state.token = action.payload.token;
     },
     logout: (state) => {
-      state = initialState;
+      state.user = null;
+      state.token = "";
     },
     saveAllUsers: (
       state,

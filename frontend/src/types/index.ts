@@ -19,7 +19,7 @@ export interface ReturnBid {
   };
 }
 
-export interface NewCar {
+export interface NewCarTypes {
   brand: string;
   model: string;
   year: string;
@@ -30,17 +30,25 @@ export interface NewCar {
   description: string;
 }
 
+interface BidProps {
+  id: string;
+  bidValue: number;
+  createdAt: Date;
+}
+
 export interface ReturnCar {
   id: string;
   brand: string;
   model: string;
   year: string;
   description: string;
+  image: string;
   auctionStart: Date;
   auctionEnd: Date;
   startBid: number;
   createdAt: Date;
   updatedAt: Date;
+  Bids: BidProps[];
 }
 
 export interface ReportData {
