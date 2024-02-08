@@ -1,15 +1,14 @@
 "use client";
 
 import { LoginCard, RegisterCard } from "@/components/cards";
-import Notification from "@/components/notifications";
 import { usePublicApi } from "@/hooks/apiPublicHooks";
-import { useAppSelector, useAppDispatch } from "@/hooks/reduxHook";
-import { Container, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
-import sha256 from "sha256";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { loginAction, logout } from "@/store/reducers/authReducer";
+import { Container, Grid } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import sha256 from "sha256";
 
 export default function Login() {
   const { loginConection, registerConection } = usePublicApi();

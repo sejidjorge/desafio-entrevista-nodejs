@@ -1,3 +1,15 @@
+export interface AuthReducerStateTypes {
+  user: {
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  token: string;
+}
+
 export interface NewBid {
   bidValue: number;
   carId: string;
@@ -33,7 +45,7 @@ export interface NewCarTypes {
 interface BidProps {
   id: string;
   bidValue: number;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface ReturnCar {
@@ -43,11 +55,11 @@ export interface ReturnCar {
   year: string;
   description: string;
   image: string;
-  auctionStart: Date;
-  auctionEnd: Date;
+  auctionStart: string;
+  auctionEnd: string;
   startBid: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   Bids: BidProps[];
 }
 

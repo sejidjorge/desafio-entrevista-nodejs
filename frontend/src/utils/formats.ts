@@ -15,6 +15,6 @@ export function formatDate(value: Date) {
     minute: "numeric",
     hour12: false,
   };
-
+  // @ts-ignore
   return new Date(value)?.toLocaleDateString("pt-br", options).replace(",", "");
 }

@@ -5,12 +5,15 @@ import { NewCar } from "@/components/modais";
 import { useControlPageTitle } from "@/contexts/PageContext";
 import { usePrivateApi } from "@/hooks/apiPrivateHooks";
 import { useAppSelector } from "@/hooks/reduxHook";
+import { AuthReducerStateTypes, ReturnCar } from "@/types";
 import { Add, Refresh } from "@mui/icons-material";
 import { Button, CircularProgress, Grid } from "@mui/material";
 import { useLayoutEffect, useState } from "react";
 
 export default function AllCars() {
-  const { user } = useAppSelector((state: { authUser }) => state.authUser);
+  const { user } = useAppSelector(
+    (state: { authUser: AuthReducerStateTypes }) => state.authUser
+  );
   const { setPageTitle } = useControlPageTitle();
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -73,9 +76,9 @@ export default function AllCars() {
         {loading ? (
           <CircularProgress />
         ) : cars.length > 0 ? (
-          cars.map((car) => (
-            <Grid item>
-              <CarCard car={car} key={car.id} />
+          cars.map((car: ReturnCar) => (
+            <Grid item key={car.id}>
+              <CarCard car={car} />
             </Grid>
           ))
         ) : (

@@ -1,5 +1,6 @@
 import { usePrivateApi } from "@/hooks/apiPrivateHooks";
-import { ReturnCar } from "@/types";
+import { useAppSelector } from "@/hooks/reduxHook";
+import { AuthReducerStateTypes, ReturnCar } from "@/types";
 import { formatCurrencyBr, formatDate } from "@/utils/formats";
 import { Delete, Edit } from "@mui/icons-material";
 import {
@@ -30,7 +31,6 @@ import {
   useState,
 } from "react";
 import EditCar from "./editCar";
-import { useAppSelector } from "@/hooks/reduxHook";
 
 interface DetailCarModalProps {
   carId: string;
@@ -49,7 +49,9 @@ const Transition = forwardRef(function Transition(
 
 export default function DetailsCar(props: DetailCarModalProps) {
   const { getCarById, newBid } = usePrivateApi();
-  const { user } = useAppSelector((state: { authUser }) => state.authUser);
+  const { user } = useAppSelector(
+    (state: { authUser: AuthReducerStateTypes }) => state.authUser
+  );
   const [loading, setLoading] = useState(false);
   const [openBidModal, setOpenBidModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
