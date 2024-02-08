@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
+import { AuthMiddleware } from "src/auth/auth.middleware";
+import { AuthModule } from "src/auth/auth.module";
 import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
-import { AuthModule } from "src/auth/auth.module";
-import { JwtModule } from "@nestjs/jwt";
-import { AuthService } from "src/auth/auth.service";
 
 @Module({
   imports: [
@@ -14,11 +14,9 @@ import { AuthService } from "src/auth/auth.service";
   providers: [UsersService],
 })
 export class UsersModule {
-  constructor(private readonly authService: AuthService) {}
-
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(this.authService.validateSession)
+      .apply(AuthMiddleware)
       .exclude(
         { path: "users/register", method: RequestMethod.POST },
         { path: "users/login", method: RequestMethod.POST }
@@ -27,8 +25,8 @@ export class UsersModule {
   }
 }
 
-  //   users/register
-  //   users/list
-  //   users/:id update
-  //   users/:id get data
-  //   users/id delete
+//   users/register
+//   users/list
+//   users/:id update
+//   users/:id get data
+//   users/id delete

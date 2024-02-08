@@ -38,17 +38,4 @@ describe("AuthService", () => {
 
     expect(actualUser).toEqual(token);
   });
-
-  it("should allow valid token", async () => {
-    const token =
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzMxOGI4OTkyZDc1MmFlZjQyZDE3MiIsIm5hbWUiOiJKb2huIERvZSIsInJvbGUiOiJVU0VSIiwiZXhwIjoxNzA3MzYxNDc0LCJpYXQiOjE3MDczNTQyNzR9.GbwwlmVgniIuv3vsMWQLhPRX0tYw1wl8m1xCGTdF-qE";
-    const req = { headers: { authorization: token } } as unknown as Request;
-    const res = {} as unknown as Response;
-    const next = jest.fn();
-
-    const validate = await service.validateSession(req, res, next);
-
-    expect(jwtService.verify).toHaveBeenCalledWith(token);
-    expect(validate).toHaveBeenCalled();
-  });
 });

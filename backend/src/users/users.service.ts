@@ -36,7 +36,13 @@ export class UsersService {
     try {
       for (const field of required) {
         if (!body[field]) {
-          throw new Error(`${field} is required`);
+          throw new HttpException(
+            {
+              message: `${field} is required`,
+              statusCode: HttpStatus.BAD_REQUEST,
+            },
+            HttpStatus.BAD_REQUEST
+          );
         }
       }
 
@@ -71,15 +77,6 @@ export class UsersService {
           HttpStatus.CONFLICT
         );
       }
-      if (error.includes("is required")) {
-        throw new HttpException(
-          {
-            message: error,
-            statusCode: HttpStatus.BAD_REQUEST,
-          },
-          HttpStatus.BAD_REQUEST
-        );
-      }
       throw new HttpException(
         {
           message: "Error creating user",
@@ -96,7 +93,13 @@ export class UsersService {
     try {
       for (const field of required) {
         if (!body[field]) {
-          throw new Error(`${field} is required`);
+          throw new HttpException(
+            {
+              message: `${field} is required`,
+              statusCode: HttpStatus.BAD_REQUEST,
+            },
+            HttpStatus.BAD_REQUEST
+          );
         }
       }
 
@@ -130,15 +133,8 @@ export class UsersService {
       };
       return { user: formatedUser, token };
     } catch (error) {
-      if (error.includes("is required")) {
-        throw new HttpException(
-          {
-            message: error,
-            statusCode: HttpStatus.BAD_REQUEST,
-          },
-          HttpStatus.BAD_REQUEST
-        );
-      }
+      console.log(error);
+
       throw new HttpException(
         {
           message: "Error logging in",

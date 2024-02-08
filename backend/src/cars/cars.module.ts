@@ -1,9 +1,9 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
+import { AuthMiddleware } from "src/auth/auth.middleware";
+import { AuthModule } from "src/auth/auth.module";
 import { CarsController } from "./cars.controller";
 import { CarsService } from "./cars.service";
-import { AuthService } from "src/auth/auth.service";
-import { AuthModule } from "src/auth/auth.module";
-import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -14,9 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
   providers: [CarsService],
 })
 export class CarsModule {
-  constructor(private readonly authService: AuthService) {}
-
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(this.authService.validateSession).forRoutes(CarsController);
+    consumer.apply(AuthMiddleware).forRoutes(CarsController);
   }
 }

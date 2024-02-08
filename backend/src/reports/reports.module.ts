@@ -1,21 +1,20 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
+import { JwtModule } from "@nestjs/jwt";
+import { AuthMiddleware } from "src/auth/auth.middleware";
+import { AuthModule } from "src/auth/auth.module";
 import { ReportsController } from "./reports.controller";
 import { ReportsService } from "./reports.service";
-import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from 'src/auth/auth.module';
-import { AuthService } from 'src/auth/auth.service';
 
-@Module({  imports: [
+@Module({
+  imports: [
     AuthModule,
     JwtModule.register({ secret: process.env.PRIVATE_KEY }),
   ],
-	controllers: [ReportsController],
-	providers: [ReportsService],
+  controllers: [ReportsController],
+  providers: [ReportsService],
 })
-export class ReportsModule {constructor(private readonly authService: AuthService) {}
-
-configure(consumer: MiddlewareConsumer) {
-  consumer
-	.apply(this.authService.validateSession)
-	.forRoutes(ReportsController);
-}}
+export class ReportsModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes(ReportsController);
+  }
+}
